@@ -1,0 +1,20 @@
+version: '3'
+services: 
+  web: 
+    stdin_open: true #to solve exited with code 0  
+    build: 
+      context: .
+      dockerfile: Dockerfile.dev
+    ports: 
+      - "3000:3000" # port of local : port of container
+    volumes: #say what files is references and what not. 
+      - /app/node_modules #not references, 
+      - .:/app # is references
+  test:
+    build: 
+      context: .
+      dockerfile: Dockerfile.dev
+    volumes:
+      - /app/node_modules
+      - .:/app
+    command: ["npm", "run", "test"]
